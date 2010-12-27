@@ -1,0 +1,13 @@
+Bluepill.application("multiset", :log_file => "/tmp/bluepill_multiset.log") do |app|
+  app.uid = app.gid = "deploy"
+  
+  app.process("node") do |process|
+    process.working_dir = File.join(File.dirname(__FILE__), "..")
+    
+    process.daemonize = true
+    process.stdout = process.stderr = "/tmp/multiset.log"
+    
+    process.start_command = "/usr/local/bin/node src/server.js"
+    process.pid_file = "/tmp/multiset.pid"
+  end
+end
