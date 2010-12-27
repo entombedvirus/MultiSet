@@ -49,7 +49,7 @@ Client.Countdown.prototype = {
 		
 		ctx.fillStyle = "rgb(255, 255, 255)";
 		ctx.font = "24px Verdana";
-		ctx.fillText(this.formatedTimeLeft(), x - 38, y + 8);
+		ctx.fillText(this.formatedTimeLeft(), x - 36, y + 8);
 	},
 	
 	formatedTimeLeft: function() {
