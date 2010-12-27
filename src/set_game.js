@@ -61,6 +61,7 @@ SetGame.ClientHandler.prototype = {
 		var result = board.verify(indices);
 		
 		if (true || result) {
+			user.score++;
 			user.announce("got a set!");
 			
 			if (board.deck.length < indices.length) {
@@ -77,7 +78,8 @@ SetGame.ClientHandler.prototype = {
 		
 		this.payload("verifyResult", {
 			result: result,
-			board: board
+			board: board,
+			score: this.user.score
 		});
 		this.broadcast("initBoard", board);
 	},
