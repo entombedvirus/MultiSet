@@ -8,6 +8,8 @@
     <script src="/js/client.chat.js"></script>
     <script src="/js/client.set_game.js"></script>
     <script src="/js/client.user.js"></script>
+    <script src="/js/client.countdown.js"></script>
+    <script src="/js/sprintf-0.7-beta1.js"></script>
     <script src="/socket.io/socket.io.js"></script>
     <!-- http://set.sentientagent.com -->
     <script src="https://www.google.com/jsapi?key=ABQIAAAAWzndeawmRej2j5JdOLTBhxR60s5i67ytCt-kLiTeBCd_Cv9eOxTNPcv6sHEV47uEBA0s_s9rpdh6-Q" type="text/javascript"></script>
@@ -46,6 +48,7 @@
       #chatContainer {
         margin-top: 20px;
         border: 1px solid #333;
+        clear: both;
       }
       
       #chatContainer h2 {
@@ -70,6 +73,20 @@
       #form input[type=submit] { cursor: pointer; background: #999; border: none; padding: 6px 8px; -moz-border-radius: 8px; -webkit-border-radius: 8px; margin-left: 5px; text-shadow: 0 1px 0 #fff; }
       #form input[type=submit]:hover { background: #A2A2A2; }
       #form input[type=submit]:active { position: relative; top: 2px; }
+      
+      #hud {
+        width: 700px;
+        margin: 0 auto;
+        float: left;
+      }
+      
+      #board {
+        margin-left: 268px;
+        float: left;
+      }
+      #sidebar {
+        float: right;
+      }
       
       #board table { margin: 0px auto; }
       #board td { padding: 5px;}
@@ -115,13 +132,23 @@
       #board .card.texture_filled  { text-decoration: underline; }
       #board .card.texture_striped { text-decoration: line-through; }
       #board .card.texture_empty   { text-decoration: overline; }
+      
+      #countdown {
+        border: 1px solid #ccc;
+      }
     </style>
     
   </head>
   <body>
     <section id="container">
-      <section id="board">
-        <p>Loading...</p>
+      
+      <section id="hud">
+        <section id="board">
+          <p>Loading...</p>
+        </section>
+        <section id="sidebar">
+          <canvas id="countdown"></canvas>
+        </section>
       </section>
       
       <section id="chatContainer">
@@ -130,7 +157,7 @@
           <p>Connecting...</p>
         </div>
 
-        <form id="form" onsubmit="chat.send(); return false">
+        <form id="form" onsubmit="currentUser.chat.send(); return false">
           <input type="text" autocomplete="off" id="text"><input type="submit" value="Send">
         </form>
       </section>

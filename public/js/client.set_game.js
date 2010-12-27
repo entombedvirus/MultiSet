@@ -22,6 +22,8 @@ Client.SetGame.prototype = {
 	},
 	
 	initBoard: function(board) {
+		this.startCountdown();
+		
 		$('#board').html("");
 		
 		var table = $('<table></table>');
@@ -42,6 +44,11 @@ Client.SetGame.prototype = {
 		table.click(bind(this, this.onBoardClick));
 		
 		$('#board').append(table);
+	},
+	
+	startCountdown: function() {
+		this.countdown = this.countdown || new Client.Countdown(this.user);
+		this.countdown.start(90);
 	},
 	
 	onBoardClick: function(e) {

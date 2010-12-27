@@ -60,7 +60,7 @@ SetGame.ClientHandler.prototype = {
 		var board = this.game.board, user = this.user;
 		var result = board.verify(indices);
 		
-		if (true || result) {
+		if (result) {
 			user.score++;
 			user.announce("got a set!");
 			
