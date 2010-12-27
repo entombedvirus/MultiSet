@@ -29,7 +29,7 @@
     </script>
     
     <style>
-      body,html { background-color: #042333 !important;}
+      body,html { background-color: #042333 !important; font-family: Verdana, Arial, Helvetica, sans-serif;}
       
       #container { 
         background-color: #fafafa; 
@@ -46,7 +46,6 @@
       }
       #footer {
         padding: 4px 2px;
-        font-family: Verdana, Arial;
         text-align: center;
         color: #fafafa;
         background-color: #031c29;
@@ -158,10 +157,32 @@
       #footer a:hover {
         text-decoration: underline !important;
       }
+      
+      .hint {
+        display: block;
+        float: right;
+        padding: 6px;
+        margin-top: -5px;
+        background-color: yellow;
+        text-decoration: none;
+        
+        border-top-right-radius: 5px 5px;
+        border-bottom-right-radius: 5px 5px;
+        
+        -webkit-transform: rotate(90deg);
+        -moz-transform: rotate(90deg);
+        transform: rotate(90deg);
+      }
+      .hint:hover {
+        -webkit-box-shadow: 0 0 10px yellow;
+        -moz-box-shadow: 0 0 10px yellow;
+        box-shadow: 0 0 10px yellow;
+      }
     </style>
     
   </head>
   <body>
+    <a class="hint" href="http://www.setgame.com/set/rules_set.htm">How to Play</a>
     <section id="container">
       <section id="hud">
         <section id="board">
