@@ -4,8 +4,10 @@
     <title>socket.io client test</title>
         
     <script src="/js/json.js"></script> <!-- for ie -->
+    <script src="/js/client.logger.js"></script>
     <script src="/js/client.chat.js"></script>
     <script src="/js/client.set_game.js"></script>
+    <script src="/js/client.user.js"></script>
     <script src="/socket.io/socket.io.js"></script>
     <!-- http://set.sentientagent.com -->
     <script src="https://www.google.com/jsapi?key=ABQIAAAAWzndeawmRej2j5JdOLTBhxR60s5i67ytCt-kLiTeBCd_Cv9eOxTNPcv6sHEV47uEBA0s_s9rpdh6-Q" type="text/javascript"></script>
@@ -117,26 +119,9 @@
     
   </head>
   <body>
-    
-    <script>
-      function bind(obj, func) {
-        return function() {
-          func.apply(obj, arguments);
-        };
-      }
-    
-      var socket = new io.Socket(null, {port: 8124, rememberTransport: false});
-      
-      var chat = new Client.Chat(socket);
-      var game = new Client.SetGame(socket);
-      
-      socket.connect();
-      // socket.on('message', game.onMessage);
-    </script>
-    
     <section id="container">
       <section id="board">
-
+        <p>Loading...</p>
       </section>
       
       <section id="chatContainer">
@@ -150,5 +135,16 @@
         </form>
       </section>
     </section>
+    
+    <script>
+      function bind(obj, func) {
+        return function() {
+          func.apply(obj, arguments);
+        };
+      }
+    
+      var currentUser = new Client.User();
+      currentUser.initSession();
+    </script>
   </body>
 </html>

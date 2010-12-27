@@ -8,14 +8,14 @@ HttpServer.serverCallback = function(req, res) {
 	var path = url.parse(req.url).pathname;
 	switch (path){
 		case '/':
-		res.writeHead(200, {'Content-Type': 'text/html'});
-		res.write('<h1>Welcome. Try the <a href="/index.html">example</a>.</h1>');
-		res.end();
-		break;
-
+		path = '/index.html';
+		// pass through
+		
 		case '/js/json.js':
 		case '/js/client.chat.js':
 		case '/js/client.set_game.js':
+		case '/js/client.logger.js':
+		case '/js/client.user.js':
 		case '/index.html':
 		fs.readFile(env.PUBLIC_DIR + path, function(err, data){
 			if (err) return send404(res);

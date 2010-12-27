@@ -1,9 +1,9 @@
 if (typeof(Client) == "undefined") Client = {};
 
 // Constructor
-Client.SetGame = function(socket) {
-	this.socket = socket;
-	this.socket.on('message', bind(this, this.onMessage));
+Client.SetGame = function(user) {
+	this.user = user;
+	user.socket.on('message', bind(this, this.onMessage));
 	this.frozen = false;
 };
 
@@ -17,7 +17,6 @@ Client.SetGame.prototype = {
 		if (obj.key != Client.SetGame.MSG_KEY) return;
 		
 		if (obj.method) {
-			console.log("Response: ", obj.key, obj.method, obj.data);
 			this[obj.method].call(this, obj.data);
 		}
 	},
@@ -80,15 +79,7 @@ Client.SetGame.prototype = {
 	},
 	
 	payload: function(method, data) {
-		var payload = {
-			"key": Client.SetGame.MSG_KEY,
-			"method": method,
-			"data": data
-		}
-		
-		console.log("Request: ", payload.key, payload.method, payload.data);
-		
-		socket.send(payload);
+		this.user.payload(Client.SetGame.MSG_KEY, method, data);
 	},
 	
 	flattenIdx: function(row, col) {

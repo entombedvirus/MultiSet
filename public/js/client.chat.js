@@ -2,9 +2,9 @@ if (typeof(Client) == "undefined") Client = {};
 
 
 // Constructor
-Client.Chat = function(socket) {
-	this.socket = socket;
-	this.socket.on('message', bind(this, this.onMessage));
+Client.Chat = function(user) {
+	this.user = user;
+	user.socket.on('message', bind(this, this.onMessage));
 };
 
 // key used in message passing so that we can filter out messages addressed only to us
@@ -17,7 +17,6 @@ Client.Chat.prototype = {
 		if (obj.key != Client.Chat.MSG_KEY) return;
 		
 		if (obj.method) {
-			console.log("Response: ", obj.key, obj.method, obj.data);
 			this[obj.method].call(this, obj.data);
 		}
 	},
@@ -58,13 +57,6 @@ Client.Chat.prototype = {
 	},
 	
 	payload: function(method, data) {
-		var payload = {
-			key: Client.Chat.MSG_KEY,
-			method: method,
-			data: data
-		};
-		
-		this.socket.send(payload);
+		this.user.payload(Client.Chat.MSG_KEY, method, data);
 	},
-	
 }
