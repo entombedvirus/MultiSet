@@ -1,0 +1,154 @@
+<!doctype html>
+<html>
+  <head>
+    <title>socket.io client test</title>
+        
+    <script src="/js/json.js"></script> <!-- for ie -->
+    <script src="/js/client.chat.js"></script>
+    <script src="/js/client.set_game.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <!-- http://set.sentientagent.com -->
+    <script src="https://www.google.com/jsapi?key=ABQIAAAAWzndeawmRej2j5JdOLTBhxR60s5i67ytCt-kLiTeBCd_Cv9eOxTNPcv6sHEV47uEBA0s_s9rpdh6-Q" type="text/javascript"></script>
+    <script>
+      google.load("yui", "2.8.2");
+      google.load("jquery", "1.4.4");
+      google.setOnLoadCallback(function() {
+        var loader = new YAHOO.util.YUILoader({
+            require: ["reset", "fonts"],
+            loadOptional: true,
+            timeout: 10000,
+            combine: true
+        });
+
+        loader.insert();
+      });
+    </script>
+    
+    <style>
+      body,html { background-color: #042333 !important;}
+      
+      #container { 
+        background-color: #fafafa; 
+        width: 760px; 
+        margin: 30px auto; 
+        padding: 10px;
+        
+        -moz-box-shadow: 3px 3px 3px #000;
+        -webkit-box-shadow: 3px 3px 3px #000;
+        box-shadow: 3px 3px 3px #000;
+        
+        border-top-left-radius: 5px 5px;
+        border-top-right-radius: 5px 5px;
+      }
+      
+      #chatContainer {
+        margin-top: 20px;
+        border: 1px solid #333;
+      }
+      
+      #chatContainer h2 {
+        display: block;
+        font-family: Monaco, monospace;
+        padding: 4px 2px 4px 6px;
+        background-color: #333;
+        color: #fafafa;
+      }
+      
+      #chat { 
+        height: 300px; 
+        overflow: auto; 
+        border: 1px solid #eee; 
+        font: 13px Helvetica, Arial; 
+      }
+      
+      #chat p { padding: 8px; margin: 0; }
+      #chat p:nth-child(odd) { background: #F6F6F6; }
+      #form { background: #333; padding: 5px 10px; display: none; }
+      #form input[type=text] { width: 675px; padding: 5px; background: #fff; font-size: 18px; border: 1px solid #fff; }
+      #form input[type=submit] { cursor: pointer; background: #999; border: none; padding: 6px 8px; -moz-border-radius: 8px; -webkit-border-radius: 8px; margin-left: 5px; text-shadow: 0 1px 0 #fff; }
+      #form input[type=submit]:hover { background: #A2A2A2; }
+      #form input[type=submit]:active { position: relative; top: 2px; }
+      
+      #board table { margin: 0px auto; }
+      #board td { padding: 5px;}
+      
+      #board .card {
+        display: inline-block;
+        width: 70px;
+        height: 95px;
+        line-height: 95px;
+        border: 1px solid #ccc;
+        text-shadow: #aaa 1px 1px 1px;
+        font-family: Times, serif; 
+        font-size: 27px; 
+        
+        -webkit-box-shadow: 3px 3px 3px #999;
+        -moz-box-shadow: 3px 3px 3px #999;
+        box-shadow: 3px 3px 3px #999;
+      }
+      
+      #board td.selected .card { 
+        opacity: 0.4; 
+        border-color: green;
+        text-shadow: none;
+        
+        -webkit-box-shadow: none;
+        -moz-box-shadow: none;
+        box-shadow: none;
+      }
+      
+      #board td.selected_other .card { 
+        border-color: orange; 
+        text-shadow: none;
+        
+        -webkit-box-shadow: none;
+        -moz-box-shadow: none;
+        box-shadow: none;
+      }
+      
+      
+      #board .card.color_red { color: red; }
+      #board .card.color_green { color: green; }
+      #board .card.color_purple { color: purple; }
+      #board .card.texture_filled  { text-decoration: underline; }
+      #board .card.texture_striped { text-decoration: line-through; }
+      #board .card.texture_empty   { text-decoration: overline; }
+    </style>
+    
+  </head>
+  <body>
+    
+    <script>
+      function bind(obj, func) {
+        return function() {
+          func.apply(obj, arguments);
+        };
+      }
+    
+      var socket = new io.Socket(null, {port: 8124, rememberTransport: false});
+      
+      var chat = new Client.Chat(socket);
+      var game = new Client.SetGame(socket);
+      
+      socket.connect();
+      // socket.on('message', game.onMessage);
+    </script>
+    
+    <section id="container">
+      <section id="board">
+
+      </section>
+      
+      <section id="chatContainer">
+        <h2>Chat</h2>
+        <div id="chat">
+          <p>Connecting...</p>
+        </div>
+
+        <form id="form" onsubmit="chat.send(); return false">
+          <input type="text" autocomplete="off" id="text"><input type="submit" value="Send">
+        </form>
+      </section>
+    </section>
+  </body>
+</html>
