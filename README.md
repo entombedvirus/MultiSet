@@ -1,7 +1,7 @@
 MultiSet
 ========
 
-This project was born out of my desire to learn [node.js](http://nodejs.org). Only tested on [Google Chrome](http://www.google.com/chrome)
+This project was born out of my desire to learn [node.js](http://nodejs.org). Only tested on [Google Chrome](http://www.google.com/chrome).
 
 Interesting Bits
 ================
@@ -10,6 +10,11 @@ Interesting Bits
 2. Uses websockets to communicate in real time with the server.
 3. Degrades to using flash & xhr when websocket is not available. Thanks, [socket.io](http://socket.io)!
 2. Chat functionality to talk to fellow players.
+
+Demo
+====
+
+A demo of `MultiSet` is available [here](http://ms.sentientagent.com:8124).
 
 Prerequisites
 =============
