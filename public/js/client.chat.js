@@ -38,18 +38,35 @@ Client.Chat.prototype = {
 		document.getElementById('chat').scrollTop = 1000000;
 	},
 	
+	onGameReload: function(secsToWait) {
+		var secsToWait = secsToWait || 3;
+		
+		var chat = this;
+		var ticker = function() {
+			chat.appendMessage({announcement: "Reloading in " + secsToWait + "..."});
+			secsToWait--;
+			secsToWait < 1 ? window.location.reload() : setTimeout(ticker, 1000);
+		};
+		
+		setTimeout(ticker, 1000);
+	},
+	
 	send: function() {
 		var val = document.getElementById('text').value;
-		var matchData = val.match(/^!(.+) (.+)/);
+		var matchData = val.match(/^!([^ ]+) ?(.+)?/);
 		
 		if (matchData) {
-			this.payload("cmd_" + matchData[1], matchData[2]);
+			this.handleUserCommand(matchData[1], matchData[2]);
 		} else {
 			this.payload("chatMessage", val);
 			this.appendMessage({message: ['you', val] });
 		}
 		
 		document.getElementById('text').value = '';
+	},
+	
+	handleUserCommand: function(cmd, arg) {
+		this.payload("cmd_" + cmd, arg);
 	},
 	
 	esc: function(msg) {

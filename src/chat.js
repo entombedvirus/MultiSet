@@ -49,6 +49,16 @@ Chat.ClientHandler.prototype = {
 		this.user.announce("changed name to " + name);
 		this.user.name = name;
 	},
+
+	cmd_reload: function(waitTime) {
+		waitTime = waitTime || 3;
+		
+		this.user.announce("scheduled a reload of the game. Please wait while I restart...");
+		
+		this.payload("onGameReload", waitTime);
+		this.broadcast("onGameReload", waitTime);
+		setTimeout(function() { process.exit(1) }, waitTime);
+	},
 	
 	payload: function(method, data) {
 		this.user.send(this.getPayload(method, data));
