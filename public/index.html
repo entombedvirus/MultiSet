@@ -16,6 +16,7 @@
     <script>
       google.load("yui", "2.8.2");
       google.load("jquery", "1.4.4");
+      
       google.setOnLoadCallback(function() {
         var loader = new YAHOO.util.YUILoader({
             require: ["reset", "fonts"],
@@ -23,8 +24,13 @@
             timeout: 10000,
             combine: true
         });
-
         loader.insert();
+        
+        jQuery.getScript("js/jquery.cookie.js", function() {
+          // All the libs have been loaded, start the game!
+          window.currentUser = new Client.User();
+          window.currentUser.initSession();
+        });
       });
     </script>
     
@@ -237,9 +243,6 @@
           func.apply(obj, arguments);
         };
       }
-    
-      var currentUser = new Client.User();
-      currentUser.initSession();
     </script>
   </body>
 </html>

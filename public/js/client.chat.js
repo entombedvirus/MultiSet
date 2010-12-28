@@ -28,6 +28,15 @@ Client.Chat.prototype = {
 		$('#text').focus();
 
 		for (var i in buffer) this.appendMessage(buffer[i]);
+		
+		this.restoreName();
+	},
+	
+	restoreName: function() {
+		var savedName = $.cookie('name');
+		if (!savedName) return;
+		
+		this.handleUserCommand("name", savedName);
 	},
 	
 	appendMessage: function(obj) {
@@ -67,6 +76,13 @@ Client.Chat.prototype = {
 	
 	handleUserCommand: function(cmd, arg) {
 		this.payload("cmd_" + cmd, arg);
+		
+		switch(cmd) {
+			case 'name':
+				// Save the user's name so that we can re-use it in the next session
+				$.cookie('name', arg, {expires: 365});
+				break;
+		}
 	},
 	
 	esc: function(msg) {

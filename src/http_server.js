@@ -18,6 +18,7 @@ HttpServer.serverCallback = function(req, res) {
 		case '/js/client.user.js':
 		case '/js/client.countdown.js':
 		case '/js/sprintf-0.7-beta1.js':
+		case '/js/jquery.cookie.js':
 		case '/index.html':
 		fs.readFile(env.PUBLIC_DIR + path, function(err, data){
 			if (err) return send404(res);
