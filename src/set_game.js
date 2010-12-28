@@ -28,6 +28,12 @@ SetGame.MODES = {
 }
 
 SetGame.prototype = {
+	getSolutions: function() {
+		return this.board.
+			getSolutions().map(function(indices) {
+				return indices.map(function(idx) { return idx + 1 });
+			});
+	},
 }
 
 SetGame.ClientHandler = function(user, game) {

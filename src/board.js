@@ -86,15 +86,18 @@ Board.prototype = {
 	numSolutions: function() {
 		if (!this.cards) return 0;
 		
+		return this.getSolutions().length;
+	},
+	
+	getSolutions: function() {
 		var cardNums = [];
 		(this.rows * this.cols).times(function(idx) { cardNums[idx] = idx });
 		
 		var possibleChoices = cardNums.combinationsOf(3);
 		
 		var board = this;
-		var solutions = possibleChoices.filter(function(choice) { return board.verify(choice) });
 		
-		return solutions.length;
+		return possibleChoices.filter(function(choice) { return board.verify(choice) });
 	},
 	
 	reset: function() {

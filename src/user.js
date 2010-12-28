@@ -11,10 +11,12 @@ User = function(client) {
 
 User.prototype = {
 	bindChat: function(chat) {
+		this.chat = chat;
 		return this.chatHandler = new Chat.ClientHandler(this, chat);
 	},
 	
 	bindGame: function(game) {
+		this.game = game;
 		return this.gameHandler = new SetGame.ClientHandler(this, game);
 	},
 	

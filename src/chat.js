@@ -63,6 +63,17 @@ Chat.ClientHandler.prototype = {
 		setTimeout(function() { process.exit(1) }, waitTime);
 	},
 	
+	cmd_cheat: function() {
+		this.user.announce("just cheated!");
+		
+		var sols = this.user.game.getSolutions();
+		
+		var msg = "are looking for these: ";
+		sols.forEach(function(sol) { msg += '[' + sol.join(', ') + '] ' });
+		
+		this.user.announce(msg);
+	},
+	
 	payload: function(method, data) {
 		this.user.send(this.getPayload(method, data));
 	},
