@@ -29,14 +29,18 @@
     </script>
     
     <style>
-      body,html { background-color: #042333 !important; font-family: Verdana, Arial, Helvetica, sans-serif;}
+      body,html { background-color: #031c29 !important; font-family: Verdana, Arial, Helvetica, sans-serif;}
       
+      #wrapper {
+        background-color: #042333;
+        padding: 30px 0; 
+        
+      }
       #container { 
         background-color: #fafafa; 
         width: 760px; 
-        margin: 30px auto; 
         padding: 10px;
-        
+        margin: 0 auto;
         -moz-box-shadow: 3px 3px 3px #000;
         -webkit-box-shadow: 3px 3px 3px #000;
         box-shadow: 3px 3px 3px #000;
@@ -48,11 +52,10 @@
         padding: 4px 2px;
         text-align: center;
         color: #fafafa;
-        background-color: #031c29;
 
-        -webkit-box-shadow: 0 -1px 6px #111;
-        -moz-box-shadow: 0 -1px 6px #111;
-        box-shadow: 0 -1px 6px #111;
+        -webkit-box-shadow: #111 0px -3px 4px;
+        -moz-box-shadow: #111 0px -3px 4px;
+        box-shadow: #111 0px -3px 4px;
       }
       
       #chatContainer {
@@ -161,7 +164,7 @@
         display: block;
         float: right;
         padding: 6px;
-        margin-top: -5px;
+        margin-top: 27px;
         background-color: yellow;
         text-decoration: none;
         
@@ -182,27 +185,29 @@
   </head>
   <body>
     <a class="hint" href="http://www.setgame.com/set/rules_set.htm">How to Play</a>
-    <section id="container">
-      <section id="hud">
-        <section id="board">
-          <p>Loading...</p>
+    <section id="wrapper">
+      <section id="container">
+        <section id="hud">
+          <section id="board">
+            <p>Loading...</p>
+          </section>
+          <section id="sidebar">
+            <canvas id="countdown"></canvas>
+          </section>
         </section>
-        <section id="sidebar">
-          <canvas id="countdown"></canvas>
+
+        <section id="chatContainer">
+          <h2>Chat</h2>
+          <div id="chat">
+            <p>Connecting...</p>
+          </div>
+
+          <form id="form" onsubmit="currentUser.chat.send(); return false">
+            <input type="text" autocomplete="off" id="text"><input type="submit" value="Send">
+          </form>
         </section>
       </section>
-
-      <section id="chatContainer">
-        <h2>Chat</h2>
-        <div id="chat">
-          <p>Connecting...</p>
-        </div>
-
-        <form id="form" onsubmit="currentUser.chat.send(); return false">
-          <input type="text" autocomplete="off" id="text"><input type="submit" value="Send">
-        </form>
-      </section>
-    </section>
+    </section>    
     
     <section id="footer">
       <p>
