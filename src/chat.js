@@ -32,7 +32,10 @@ Chat.ClientHandler.prototype = {
 		if (obj.key != Chat.MSG_KEY) return;
 		
 		if (obj.method) {
-			this[obj.method].call(this, obj.data);
+			if (typeof(this[obj.method]) == "function")
+				this[obj.method].call(this, obj.data);
+			else
+				console.error("Don't know how to handle", obj.key, obj.method);
 		}
 	},
 	
