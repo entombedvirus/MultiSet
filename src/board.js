@@ -5,9 +5,8 @@ Board = function(options) {
 	this.rows = options.rows;
 	this.cols = options.cols;
 	this.attributes = options.attributes;
-	this.deck = null;
 	
-	this.generate();
+	this.reset();
 }
 
 Board.ATTRIBUTES = {
@@ -59,10 +58,9 @@ Board.prototype = {
 		return cards;
 	},
 	
-	generate: function() {
+	dealCards: function() {
 		this.deck = this.attributes.length < 4 ? this.generateFullDeckEasy() : this.generateFullDeckHard();
 		this.deck.shuffle();
-		
 		this.cards = this.deck.splice(0, this.rows * this.cols);
 	},
 	
@@ -83,5 +81,24 @@ Board.prototype = {
 		})
 		
 		return validSet;
+	},
+	
+	numSolutions: function() {
+		if (!this.cards) return 0;
+		
+		var cardNums = [];
+		(this.rows * this.cols).times(function(idx) { cardNums[idx] = idx });
+		
+		var possibleChoices = cardNums.combinationsOf(3);
+		
+		var board = this;
+		var solutions = possibleChoices.filter(function(choice) { return board.verify(choice) });
+		
+		return solutions.length;
+	},
+	
+	reset: function() {
+		this.cards = this.deck = null;
+		while (this.numSolutions() < 1) this.dealCards();
 	}
 }

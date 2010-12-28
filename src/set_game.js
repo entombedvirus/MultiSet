@@ -6,9 +6,8 @@ SetGame = function(options) {
 	this.options = options;
 	this.options.mode = this.options.mode || 'easy';
 	
-	this.board = null;
-	
-	this.resetBoard();
+	var opts = SetGame.MODES[this.options.mode];
+	this.board = new Board(opts);
 }
 
 // key used in message passing so that we can filter out messages addressed only to us
@@ -29,10 +28,6 @@ SetGame.MODES = {
 }
 
 SetGame.prototype = {
-	resetBoard: function() {
-		var opts = SetGame.MODES[this.options.mode];
-		this.board = new Board(opts);
-	},
 }
 
 SetGame.ClientHandler = function(user, game) {
@@ -66,13 +61,14 @@ SetGame.ClientHandler.prototype = {
 			
 			if (board.deck.length < indices.length) {
 				// If we run out of cards, reset the board
-					this.game.resetBoard();
+					board.reset();
 					
 			} else {
 				// Otherwise, replace the set cards with new ones from the deck
 				indices.forEach(function(idx){
 					board.cards[idx] = board.deck.shift();
 				});
+				if (board.numSolutions() < 1) board.reset();
 			}
 		}
 		
