@@ -36,9 +36,11 @@ Client.Countdown.prototype = {
 		ctx.beginPath();
 		ctx.moveTo(x, y);
 		ctx.fillStyle = ctx.strokeStyle = "rgb(0,0,150)";
+		ctx.lineCap = "round";
+		ctx.lineWidth = "5";
 		var startAngle = 1.5*Math.PI;
-		ctx.arc(x, y, 48, startAngle, startAngle + ((1 - ratio) * 2*Math.PI), true);
-		ctx.fill();
+		ctx.arc(x, y, 45, startAngle, startAngle + ((1 - ratio) * 2*Math.PI), true);
+		ctx.stroke();
 		
 		// The full circle
 		ctx.beginPath();
