@@ -1,23 +1,44 @@
 var util  = require('utilities'),
 	chat    = require('chat'),
-	game    = require('set_game');
+	game    = require('set_game').
+	lb      = require('leaderboard');
 
 User = function(client) {
 	this.client = client;
+	
+	client.on('disconnect', util.bind(this, this.onDisconnect));
+	
 	this.chatHandler = this.gameHandler = null;
 	this.score = 0;
-	this.name = "(anonymous: " + client.sessionId + ")";
+	this.name = "(anon: " + client.sessionId + ")";
 }
 
 User.prototype = {
+	onDisconnect: function() {
+		this.announce("disconnected!");
+		this.leaderboard.removeUser(this);
+	},
+	
 	bindChat: function(chat) {
 		this.chat = chat;
-		return this.chatHandler = new Chat.ClientHandler(this, chat);
+		this.chatHandler = new Chat.ClientHandler(this, chat);
+		this.announce("disconnected!");
+		
+		return this.chatHandler;
 	},
 	
 	bindGame: function(game) {
 		this.game = game;
 		return this.gameHandler = new SetGame.ClientHandler(this, game);
+	},
+	
+	bindLeaderboard: function(lb) {
+		this.leaderboard = lb;
+		lb.addUser(this);
+	},
+	
+	broadcastLeaderboard: function() {
+		this.leaderboard && this.leaderboard.broadcast(this);
 	},
 	
 	getId: function() {
@@ -31,13 +52,33 @@ User.prototype = {
 	announce: function(msg) {
 		this.chatHandler.announce(msg);
 	},
-	
-	send: function(data) {
-		this.client.send(data);
+
+	toTO: function() {
+		var obj = {
+			name: this.name,
+			score: this.score,
+			id: this.getId()
+		};
+		
+		return obj;
 	},
 	
-	broadcast: function(data) {
-		this.client.broadcast(data);
+	payload: function(routingKey, method, data) {
+		this.client.send(this.getPayload(routingKey, method, data));
+	},
+	
+	broadcast: function(routingKey, method, data) {
+		this.client.broadcast(this.getPayload(routingKey, method, data));
+	},
+	
+	getPayload: function(routingKey, method, data) {
+		var payload = {
+			key: routingKey,
+			method: method,
+			data: data
+		};
+		
+		return payload;
 	}
 }
 

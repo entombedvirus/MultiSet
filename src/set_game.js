@@ -87,6 +87,7 @@ SetGame.ClientHandler.prototype = {
 			score: this.user.score
 		});
 		this.broadcast("initBoard", board);
+		this.user.broadcastLeaderboard();
 	},
 	
 	cmd_userSelect: function(cellIdx) {
@@ -94,20 +95,10 @@ SetGame.ClientHandler.prototype = {
 	},
 	
 	payload: function(method, data) {
-		this.user.send(this.getPayload(method, data));
+		this.user.payload(SetGame.MSG_KEY, method, data);
 	},
 	
 	broadcast: function(method, data) {
-		this.user.broadcast(this.getPayload(method, data));
+		this.user.broadcast(SetGame.MSG_KEY, method, data);
 	},
-	
-	getPayload: function(method, data) {
-		var payload = {
-			key: SetGame.MSG_KEY,
-			method: method,
-			data: data
-		};
-		
-		return payload;
-	}
 }

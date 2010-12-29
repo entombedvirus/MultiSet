@@ -75,20 +75,10 @@ Chat.ClientHandler.prototype = {
 	},
 	
 	payload: function(method, data) {
-		this.user.send(this.getPayload(method, data));
+		this.user.payload(Chat.MSG_KEY, method, data);
 	},
 	
 	broadcast: function(method, data) {
-		this.user.broadcast(this.getPayload(method, data));
+		this.user.broadcast(Chat.MSG_KEY, method, data);
 	},
-	
-	getPayload: function(method, data) {
-		var payload = {
-			key: Chat.MSG_KEY,
-			method: method,
-			data: data
-		};
-		
-		return payload;
-	}
 }

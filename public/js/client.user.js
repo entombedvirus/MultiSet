@@ -25,8 +25,9 @@ Client.User.prototype = {
 	initSession: function() {
 		var socket = this.socket, user = this;
 		
-		this.chat = new Client.Chat(user);
-		this.game = new Client.SetGame(user);
+		this.chat        = new Client.Chat(user);
+		this.game        = new Client.SetGame(user);
+		this.leaderboard = new Client.Leaderboard(user);
 
 		socket.connect();
 	},
